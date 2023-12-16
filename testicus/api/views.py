@@ -1,10 +1,45 @@
-from rest_framework import viewsets
+from django.shortcuts import get_object_or_404
+from rest_framework import viewsets, status, serializers
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
 from exams.models import Exam, User, Question, Answer
 from .serializers import (ExamSerializer,
                           UserSerializer,
                           QuestionSerializer,
-                          AnswerSerializer)
+                          AnswerSerializer,
+                          SolutionSerializer)
+from .core import get_percent
+
+
+@api_view(['POST'])
+def exam_solution(request, id):
+    serializer = SolutionSerializer(data=request.data)
+    serializer.is_valid(raise_exception=True)
+    exam = get_object_or_404(Exam, id=id)
+    questions = Question.objects.filter(exam=exam)
+    question_quantity = len(questions)
+    correct_answ_for_quest = {}
+    correct_solutions = 0
+    solutions = request.data.get('solutions')
+
+    if len(solutions) != question_quantity:
+        raise serializers.ValidationError('Необходимо ответить на все вопросы')
+
+    for question in questions:
+        correct_answer = Answer.objects.get(question=question, correct=True)
+        correct_answ_for_quest[question.id] = correct_answer.id
+
+    for solution in solutions:
+        if correct_answ_for_quest[solution['question_id']] == solution['answer_id']:
+            correct_solutions += 1
+
+    try:
+        percent = get_percent(correct_solutions, question_quantity)
+    except ZeroDivisionError:
+        percent = 0
+
+    return Response(data={'percent': percent}, status=status.HTTP_200_OK)
 
 
 class ExamsViewSet(viewsets.ModelViewSet):

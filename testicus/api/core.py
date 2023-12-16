@@ -13,3 +13,9 @@ class Base64ImageField(serializers.ImageField):
             data = ContentFile(base64.b64decode(imgstr), name='temp.' + ext)
 
         return super().to_internal_value(data)
+
+
+def get_percent(a, b):
+    if a != 0:
+        return int(a / b * 100)
+    raise ZeroDivisionError()

@@ -6,6 +6,15 @@ from exams.models import Exam, User, Question, Answer
 from .core import Base64ImageField
 
 
+class SolutionFieldSerializer(serializers.Serializer):
+    question_id = serializers.IntegerField()
+    answer_id = serializers.IntegerField()
+
+
+class SolutionSerializer(serializers.Serializer):
+    solutions = SolutionFieldSerializer(many=True, required=True)
+
+
 class AnswerSerializer(serializers.ModelSerializer):
     image = Base64ImageField(required=False, allow_null=True)
 
@@ -24,6 +33,7 @@ class AnswerSerializer(serializers.ModelSerializer):
 
 class QuestionSerializer(serializers.ModelSerializer):
     image = Base64ImageField(required=False, allow_null=True)
+    answers = AnswerSerializer(many=True, required=False, allow_null=True)
 
     class Meta:
         model = Question
@@ -31,7 +41,8 @@ class QuestionSerializer(serializers.ModelSerializer):
             'id',
             'exam',
             'text',
-            'image'
+            'image',
+            'answers'
         )
         read_only_fields = ('exam',)
 
