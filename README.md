@@ -91,11 +91,15 @@ http://127.0.0.1:8000/swagger/
 ```
 {
     "solutions": [
-        {"question_id": id,
-         "answer_id": id},
-        {"question_id": id,
-         "answer_id": id}
-]
+        {
+            "question_id": id,
+            "answer_id": id
+        },
+        {
+            "question_id": id,
+            "answer_id": id
+        }
+    ]
 }
 ```
 где:  

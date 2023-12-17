@@ -1,6 +1,7 @@
 import csv
 
 from django.core.management.base import BaseCommand
+from django.contrib.auth.hashers import make_password
 
 from exams.models import (Exam,
                           Question,
@@ -52,7 +53,7 @@ def import_user():
             User.objects.create(
                 id=row['id'],
                 username=row['username'],
-                password=row['password'],
+                password=make_password(password=row['password']),
             )
 
 
