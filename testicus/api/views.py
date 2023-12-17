@@ -10,8 +10,10 @@ from .serializers import (ExamSerializer,
                           AnswerSerializer,
                           SolutionSerializer)
 from .permissions import (IsAdminAuthorOrReadOnly,
-                          AnswerQuestionPermission)
+                          AnswerQuestionPermission,
+                          IsAdminUserOrReadOnly)
 from .core import get_percent
+from .mixins import ListRetrieveUpdateDestroyMixin
 
 
 @api_view(['POST'])
@@ -81,6 +83,7 @@ class AnswerViewSet(viewsets.ModelViewSet):
         serializer.save(question=question, author=self.request.user)
 
 
-class UserViewSet(viewsets.ModelViewSet):
+class UserViewSet(ListRetrieveUpdateDestroyMixin):
     queryset = User.objects.all()
     serializer_class = CustomUserSerializer
+    permission_classes = (IsAdminUserOrReadOnly,)

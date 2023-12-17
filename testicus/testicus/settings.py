@@ -110,6 +110,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+CSV_DIR = BASE_DIR / 'static/data/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
