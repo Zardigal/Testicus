@@ -10,7 +10,7 @@ from .serializers import (ExamSerializer,
                           AnswerSerializer,
                           SolutionSerializer)
 from .permissions import (IsAdminAuthorOrReadOnly,
-                          QuestionPermission)
+                          AnswerQuestionPermission)
 from .core import get_percent
 
 
@@ -55,7 +55,7 @@ class ExamsViewSet(viewsets.ModelViewSet):
 
 class QuestionViewSet(viewsets.ModelViewSet):
     serializer_class = QuestionSerializer
-    permission_classes = (QuestionPermission,)
+    permission_classes = (AnswerQuestionPermission,)
 
     def get_queryset(self):
         exam_id = self.kwargs.get('test_id')
@@ -69,6 +69,7 @@ class QuestionViewSet(viewsets.ModelViewSet):
 
 class AnswerViewSet(viewsets.ModelViewSet):
     serializer_class = AnswerSerializer
+    permission_classes = (AnswerQuestionPermission,)
 
     def get_queryset(self):
         question_id = self.kwargs.get('question_id')
