@@ -16,6 +16,8 @@ class Base64ImageField(serializers.ImageField):
 
 
 def get_percent(a, b):
+    """Возвращает процент от количества a в b."""
+
     if a != 0:
         return int(a / b * 100)
     raise ZeroDivisionError()
