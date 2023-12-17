@@ -9,6 +9,7 @@ from .serializers import (ExamSerializer,
                           QuestionSerializer,
                           AnswerSerializer,
                           SolutionSerializer)
+from .permissions import IsAdminAuthorOrReadOnly
 from .core import get_percent
 
 
@@ -45,6 +46,7 @@ def exam_solution(request, id):
 class ExamsViewSet(viewsets.ModelViewSet):
     queryset = Exam.objects.all()
     serializer_class = ExamSerializer
+    permission_classes = (IsAdminAuthorOrReadOnly,)
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
@@ -60,7 +62,7 @@ class QuestionViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         exam = Exam.objects.get(id=self.kwargs.get("test_id"))
-        serializer.save(exam=exam)
+        serializer.save(exam=exam, author=self.request.user)
 
 
 class AnswerViewSet(viewsets.ModelViewSet):
@@ -73,7 +75,7 @@ class AnswerViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         question = Question.objects.get(id=self.kwargs.get("question_id"))
-        serializer.save(question=question)
+        serializer.save(question=question, author=self.request.user)
 
 
 class UserViewSet(viewsets.ModelViewSet):

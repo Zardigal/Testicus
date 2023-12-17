@@ -45,6 +45,12 @@ class Question(models.Model):
         related_name='questions',
         verbose_name='тест'
     )
+    author = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='questions',
+        verbose_name='автор'
+    )
 
     def __str__(self) -> str:
         return self.text
@@ -74,6 +80,12 @@ class Answer(models.Model):
         on_delete=models.CASCADE,
         related_name='answers',
         verbose_name='вопрос'
+    )
+    author = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='answers',
+        verbose_name='автор'
     )
 
     def __str__(self) -> str:

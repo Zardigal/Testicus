@@ -13,8 +13,6 @@ router_v1 = routers.DefaultRouter()
 router_v1.register(r'tests', ExamsViewSet)
 router_v1.register(r'^tests/(?P<test_id>\d+)/questions',
                    QuestionViewSet, basename='question')
-# router_v1.register(r'^tests/(?P<test_id>\d+)/solution',
-#                    SolutionViewSet, basename='solution')
 router_v1.register(
     r'^tests/(?P<test_id>\d+)/questions/(?P<question_id>\d+)/answers',
     AnswerViewSet,

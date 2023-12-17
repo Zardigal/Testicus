@@ -18,11 +18,6 @@ class ExamAdmin(admin.ModelAdmin):
 class AnswerInline(admin.TabularInline):
     model = Answer
     extra = 0
-    # fields = ['id',
-    #           'text',
-    #           'correct',
-    #           'description',
-    #           'question']
 
 
 @admin.register(Question)

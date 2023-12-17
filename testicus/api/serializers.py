@@ -15,8 +15,13 @@ class SolutionSerializer(serializers.Serializer):
     solutions = SolutionFieldSerializer(many=True, required=True)
 
 
-class AnswerSerializer(serializers.ModelSerializer):
+class AuthorImageSerializer(serializers.ModelSerializer):
+    author = SlugRelatedField(slug_field='username', read_only=True,
+                              default=serializers.CurrentUserDefault())
     image = Base64ImageField(required=False, allow_null=True)
+
+
+class AnswerSerializer(AuthorImageSerializer):
 
     class Meta:
         model = Answer
@@ -26,13 +31,13 @@ class AnswerSerializer(serializers.ModelSerializer):
             'text',
             'correct',
             'description',
-            'image'
+            'image',
+            'author'
         )
         read_only_fields = ('question',)
 
 
-class QuestionSerializer(serializers.ModelSerializer):
-    image = Base64ImageField(required=False, allow_null=True)
+class QuestionSerializer(AuthorImageSerializer):
     answers = AnswerSerializer(many=True, required=False, allow_null=True)
 
     class Meta:
@@ -42,15 +47,13 @@ class QuestionSerializer(serializers.ModelSerializer):
             'exam',
             'text',
             'image',
-            'answers'
+            'answers',
+            'author'
         )
         read_only_fields = ('exam',)
 
 
-class ExamSerializer(serializers.ModelSerializer):
-    author = SlugRelatedField(slug_field='username', read_only=True,
-                              default=serializers.CurrentUserDefault())
-    image = Base64ImageField(required=False, allow_null=True)
+class ExamSerializer(AuthorImageSerializer):
 
     class Meta:
         model = Exam
