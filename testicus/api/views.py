@@ -5,11 +5,12 @@ from rest_framework.response import Response
 
 from exams.models import Exam, User, Question, Answer
 from .serializers import (ExamSerializer,
-                          UserSerializer,
+                          CustomUserSerializer,
                           QuestionSerializer,
                           AnswerSerializer,
                           SolutionSerializer)
-from .permissions import IsAdminAuthorOrReadOnly
+from .permissions import (IsAdminAuthorOrReadOnly,
+                          QuestionPermission)
 from .core import get_percent
 
 
@@ -54,6 +55,7 @@ class ExamsViewSet(viewsets.ModelViewSet):
 
 class QuestionViewSet(viewsets.ModelViewSet):
     serializer_class = QuestionSerializer
+    permission_classes = (QuestionPermission,)
 
     def get_queryset(self):
         exam_id = self.kwargs.get('test_id')
@@ -80,4 +82,4 @@ class AnswerViewSet(viewsets.ModelViewSet):
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
-    serializer_class = UserSerializer
+    serializer_class = CustomUserSerializer

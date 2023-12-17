@@ -23,6 +23,14 @@ class AuthorImageSerializer(serializers.ModelSerializer):
 
 class AnswerSerializer(AuthorImageSerializer):
 
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data.pop('author')
+        data.pop('correct')
+        data.pop('question')
+        data.pop('description')
+        return data
+
     class Meta:
         model = Answer
         fields = (
@@ -40,6 +48,11 @@ class AnswerSerializer(AuthorImageSerializer):
 class QuestionSerializer(AuthorImageSerializer):
     answers = AnswerSerializer(many=True, required=False, allow_null=True)
 
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data.pop('author')
+        return data
+
     class Meta:
         model = Question
         fields = (
@@ -55,6 +68,11 @@ class QuestionSerializer(AuthorImageSerializer):
 
 class ExamSerializer(AuthorImageSerializer):
 
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data.pop('author')
+        return data
+
     class Meta:
         model = Exam
         fields = (
@@ -66,9 +84,9 @@ class ExamSerializer(AuthorImageSerializer):
         )
 
 
-class UserSerializer(serializers.ModelSerializer):
+class CustomUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
         fields = ('id', 'username', 'first_name',
-                  'last_name', 'exams')
+                  'last_name')
