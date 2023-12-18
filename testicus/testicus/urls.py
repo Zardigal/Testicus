@@ -11,6 +11,7 @@ urlpatterns = [
     path('api/v1/', include('api.urls')),
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.jwt')),
+    path('', include('frontend.urls', namespace='frontend'))
 ]
 
 urlpatterns += doc_urls

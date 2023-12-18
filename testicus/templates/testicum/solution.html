@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}
+{% endblock %}
+{% block content %}
+  {% verbatim %}
+    <form id="solution_form">
+      <div class="container" id="test">
+        <h1>{{test.title}}</h1>
+        <i style="font-size: 10px;">
+          ID теста: {{test.id}}
+        </i>
+        <p style="font-size: 16px;">
+          {{test.description}}
+        </p>
+      </div>
+      <div class="container" id="questions">
+        <ul>
+          <li v-for="question in questions" :key="question.id">
+            <div class="container py-3">
+              {{ question.text }}
+              <br>
+              <i style="font-size: 10px;">
+                ID вопроса: {{ question.id }}
+              </i>
+              <div v-for="answer in question.answers" :key="answer.id">
+                <input type="radio" :name="`${question.id}`" :value="`${answer.id}`">{{answer.text}}<br>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <button class="btn" type="submit">Проверить</button>
+    </form>
+
+    <script>
+      const form = document.getElementById('solution_form');
+      form.addEventListener('submit', saveArticle)
+      var currentUrl = window.location.pathname;
+      const str_test = currentUrl.slice(7, -10);
+      const test_id = Number(str_test);
+      function saveArticle(event) {
+        event.preventDefault();
+        const myFormData = new FormData(form);
+        const solutions = []
+        for (const [key, value] of myFormData.entries()) {
+          solutions.push({ question_id: Number(key), answer_id: Number(value) })
+        }
+        const payload = {solutions}
+        fetch(`/api/v1/tests/${test_id}/solution`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+          },
+          body: JSON.stringify(payload)
+        }).then((response) => {
+          return response.json();
+        }).then((data) => {
+          alert(`Результат теста: ${data.percent}% правильных ответов.`);
+        });
+      }
+    </script>
+  {% endverbatim %}
+  <script src="/static/solution.js"></script>
+{% endblock %}
