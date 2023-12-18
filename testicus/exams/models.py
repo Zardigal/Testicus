@@ -8,6 +8,7 @@ User = get_user_model()
 class Exam(models.Model):
     title = models.CharField(
         max_length=100,
+        unique=True,
         verbose_name='название')
     description = models.TextField(verbose_name='описание')
     image = models.ImageField(

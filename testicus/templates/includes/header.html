@@ -1,0 +1,24 @@
+{% load static %}
+<header>
+  <nav class="navbar navbar-light" style="background-color: lightskyblue">
+    <div class="container">
+      <a class="navbar-brand" href="{% url 'frontend:index' %}">
+        Тестикус
+      </a>
+      {% with request.resolver_match.view_name as view_name %}        
+        <ul class="nav  nav-pills">
+          <li class="nav-item">              
+            <a class="nav-link {% if view_name == 'frontend:index' %} active {% endif %}" href="{% url 'frontend:index' %}">
+              Список тестов
+            </a>
+          </li>
+          <li class="nav-item">              
+            <a class="nav-link {% if view_name == 'frontend:about' %} active {% endif %}" href="{% url 'frontend:about' %}">
+              О проекте
+            </a>
+          </li>
+        </ul>
+      {% endwith %}
+    </div>
+  </nav>
+</header>

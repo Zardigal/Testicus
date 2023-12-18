@@ -21,6 +21,6 @@ router_v1.register(r'users', UserViewSet)
 
 
 urlpatterns = [
-    path(route='tests/<int:id>/solution', view=exam_solution),
+    path('tests/<int:id>/solution', view=exam_solution),
     path('', include(router_v1.urls))
 ]
