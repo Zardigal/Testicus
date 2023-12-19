@@ -5,6 +5,7 @@ from django.core.files.base import ContentFile
 
 
 class Base64ImageField(serializers.ImageField):
+    """Декодирует изображение из base64 и сохраняет в проекте."""
     def to_internal_value(self, data):
         if isinstance(data, str) and data.startswith('data:image'):
             format, imgstr = data.split(';base64,')
@@ -24,6 +25,7 @@ def get_percent(a, b):
 
 
 def get_object_id_from_url(path, text_before, text_after):
+    """Возвращает id объекта из переданного ендпоинта."""
     str_path = str(path)
     start_index_id = str_path.find(text_before) + len(text_before)
     end_index_id = str_path.find(text_after)

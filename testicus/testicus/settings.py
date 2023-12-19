@@ -5,9 +5,7 @@ from datetime import timedelta
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 SECRET_KEY = 'django-insecure-nz^c29z*+nx3!bv#&b$rv%%6!o(c67*3!&4)id-31k@2@6dge9'
-
 
 DEBUG = True
 
@@ -40,11 +38,9 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'testicus.urls'
 
-
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
-
 
 TEMPLATES_DIR = BASE_DIR / 'templates'
 
@@ -66,14 +62,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'testicus.wsgi.application'
 
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -90,7 +84,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
@@ -106,7 +99,6 @@ SIMPLE_JWT = {
     'AUTH_HEADER_TYPES': ('Bearer',),
 }
 
-
 LANGUAGE_CODE = 'ru'
 
 TIME_ZONE = 'UTC'
@@ -115,7 +107,6 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 STATIC_URL = 'static/'
 
 CSV_DIR = BASE_DIR / 'static/data/'
@@ -123,4 +114,5 @@ CSV_DIR = BASE_DIR / 'static/data/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = '/media/'
+
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

@@ -7,17 +7,17 @@
     <div class="container" id="index">
       <ul>
         <li v-for="test in tests" :key="test.id">
-            <div class="container py-5">
-              ID теста: {{ test.id }}
-              <br>
-              Название: {{ test.title }}
-              <br>
-              Описание: {{ test.description }}
-              <br>
-              <a :href="`tests/${test.id}`" class="card-link" style="font-size: 12px;">
-                Перейти к тесту
-              </a>
-            </div>
+          <div class="container py-5">
+            ID теста: {{ test.id }}
+            <br>
+            Название: {{ test.title }}
+            <br>
+            Описание: {{ test.description }}
+            <br>
+            <a :href="`tests/${test.id}`" class="card-link" style="font-size: 12px;">
+              Перейти к тесту
+            </a>
+          </div>
         </li>
       </ul>
     </div>
