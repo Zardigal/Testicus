@@ -9,9 +9,9 @@ ____
 
 ### Используемые технологии:
 
-Python  
-Django  
-DjangoRestFramework  
+* Python  
+* Django  
+* DjangoRestFramework  
 
 ____
 
